@@ -1,0 +1,7 @@
+interface:
+  display_name: "Interactive HTML Presentation"
+  short_description: "Create and improve interactive HTML presentations."
+  default_prompt: "Use $interactive-html-presentation to create, convert, or improve an interactive HTML presentation with strong readability, responsive design, meaningful Level 2 interaction, source integrity, and final quality checks."
+
+policy:
+  allow_implicit_invocation: true

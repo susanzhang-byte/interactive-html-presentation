@@ -1,0 +1,1050 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="A fictional test presentation based on the LumaFlow H1 2026 sample report.">
+  <title>LumaFlow H1 2026 — Fictional Test Presentation</title>
+  <style>
+    :root {
+      --paper: #f5f1e8;
+      --ink: #18221d;
+      --muted: #657068;
+      --line: #cbd0c8;
+      --accent: #df4d2f;
+      --accent-dark: #9f2e1b;
+      --green: #1f654c;
+      --blue: #2a5575;
+      --white: #fffdf8;
+      --space-1: .45rem;
+      --space-2: .8rem;
+      --space-3: 1.25rem;
+      --space-4: 2rem;
+      --space-5: 3.25rem;
+      --radius: .65rem;
+      --shadow: 0 24px 60px rgba(24, 34, 29, .12);
+    }
+
+    * { box-sizing: border-box; }
+
+    html {
+      min-width: 0;
+      background: #d9d8d2;
+      color: var(--ink);
+      font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      overflow-x: hidden;
+    }
+
+    body {
+      min-width: 0;
+      margin: 0;
+      overflow-x: hidden;
+    }
+
+    button, summary { font: inherit; }
+    button { color: inherit; }
+    a { color: var(--accent-dark); text-underline-offset: .18em; }
+
+    :focus-visible {
+      outline: 3px solid var(--accent);
+      outline-offset: 3px;
+    }
+
+    .skip-link {
+      position: fixed;
+      left: 1rem;
+      top: -5rem;
+      z-index: 20;
+      padding: .7rem 1rem;
+      background: var(--ink);
+      color: white;
+    }
+
+    .skip-link:focus { top: 1rem; }
+
+    .presentation {
+      position: relative;
+      min-height: 100dvh;
+    }
+
+    .slide {
+      display: none;
+      min-height: 100dvh;
+      padding: clamp(2.5rem, 6vw, 6.5rem) clamp(1.4rem, 7vw, 8rem) 7.5rem;
+      background: var(--paper);
+      overflow: hidden;
+    }
+
+    .slide.is-active {
+      display: grid;
+      align-items: center;
+      animation: reveal .38s ease-out both;
+    }
+
+    .slide__inner {
+      width: min(100%, 78rem);
+      margin-inline: auto;
+    }
+
+    .eyebrow {
+      margin: 0 0 var(--space-3);
+      color: var(--accent-dark);
+      font-size: clamp(.72rem, .95vw, .88rem);
+      font-weight: 750;
+      letter-spacing: .13em;
+      text-transform: uppercase;
+    }
+
+    h1, h2, h3, p { margin-top: 0; }
+
+    h1, h2 {
+      max-width: 15ch;
+      margin-bottom: var(--space-4);
+      font-family: Georgia, "Times New Roman", serif;
+      font-weight: 500;
+      letter-spacing: -.045em;
+      line-height: .96;
+      text-wrap: balance;
+    }
+
+    h1 { font-size: clamp(3.4rem, 8.2vw, 8rem); }
+    h2 { font-size: clamp(2.65rem, 5.5vw, 5.6rem); }
+
+    h3 {
+      margin-bottom: .55rem;
+      font-size: clamp(1rem, 1.5vw, 1.25rem);
+      line-height: 1.2;
+    }
+
+    .lede {
+      max-width: 42rem;
+      margin-bottom: var(--space-4);
+      color: #354139;
+      font-size: clamp(1.15rem, 1.8vw, 1.55rem);
+      line-height: 1.52;
+    }
+
+    .small, .caption, .source-note {
+      color: var(--muted);
+      font-size: .84rem;
+      line-height: 1.55;
+    }
+
+    .test-label {
+      display: inline-block;
+      margin-bottom: var(--space-4);
+      padding: .38rem .7rem;
+      border: 1px solid currentColor;
+      color: var(--accent-dark);
+      font-size: .78rem;
+      font-weight: 750;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    .rule { border-top: 1px solid var(--line); }
+    .accent-rule { border-top: 4px solid var(--accent); }
+
+    .hero {
+      background: var(--ink);
+      color: var(--white);
+    }
+
+    .hero .eyebrow, .hero .small { color: #bdc8c0; }
+    .hero h1 { max-width: 11ch; }
+    .hero .lede { max-width: 37rem; color: #e8e4da; }
+    .hero .test-label { color: #ff9d84; }
+
+    .hero__meta {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: var(--space-3);
+      align-items: end;
+      padding-top: var(--space-4);
+      border-top: 1px solid #566158;
+    }
+
+    .metric-stage {
+      display: grid;
+      grid-template-columns: minmax(0, 1.25fr) minmax(15rem, .75fr);
+      gap: clamp(2rem, 6vw, 6rem);
+      align-items: end;
+    }
+
+    .metric-primary strong {
+      display: block;
+      color: var(--accent);
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(6rem, 16vw, 14rem);
+      font-weight: 500;
+      letter-spacing: -.08em;
+      line-height: .78;
+    }
+
+    .metric-primary p {
+      max-width: 30rem;
+      margin: var(--space-4) 0 0;
+      font-size: clamp(1.1rem, 1.8vw, 1.5rem);
+      line-height: 1.42;
+    }
+
+    .metric-stack {
+      display: grid;
+      gap: var(--space-4);
+      padding-block: var(--space-3);
+    }
+
+    .metric-stack__item {
+      padding-top: var(--space-3);
+      border-top: 1px solid var(--line);
+    }
+
+    .metric-stack strong {
+      display: block;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(2.4rem, 5vw, 4.5rem);
+      font-weight: 500;
+      line-height: 1;
+    }
+
+    .split {
+      display: grid;
+      grid-template-columns: minmax(0, .95fr) minmax(0, 1.05fr);
+      gap: clamp(2rem, 7vw, 7rem);
+      align-items: center;
+    }
+
+    .evidence-list {
+      display: grid;
+      gap: 0;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      border-top: 1px solid var(--line);
+    }
+
+    .evidence-list li {
+      display: grid;
+      grid-template-columns: 6.5rem 1fr;
+      gap: var(--space-3);
+      padding: var(--space-3) 0;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .evidence-list strong {
+      color: var(--accent-dark);
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(2rem, 3.7vw, 3.5rem);
+      font-weight: 500;
+      letter-spacing: -.04em;
+      line-height: 1;
+    }
+
+    .process {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      margin-top: var(--space-5);
+      border-top: 1px solid var(--ink);
+    }
+
+    .process__step {
+      position: relative;
+      padding: var(--space-4) var(--space-3) 0 0;
+    }
+
+    .process__step::before {
+      content: "";
+      position: absolute;
+      top: -.34rem;
+      left: 0;
+      width: .65rem;
+      height: .65rem;
+      border-radius: 50%;
+      background: var(--accent);
+    }
+
+    .process__step span {
+      display: block;
+      margin-bottom: .45rem;
+      color: var(--muted);
+      font-size: .75rem;
+      font-weight: 750;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+    }
+
+    .market-path {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+      gap: var(--space-4);
+      align-items: center;
+      margin-top: var(--space-4);
+    }
+
+    .market-year {
+      padding-block: var(--space-4);
+      border-block: 1px solid var(--line);
+    }
+
+    .market-year strong {
+      display: block;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(4.5rem, 10vw, 8rem);
+      font-weight: 500;
+      letter-spacing: -.07em;
+      line-height: .9;
+    }
+
+    .market-year strong + span {
+      display: block;
+      margin-top: clamp(.8rem, 1.4vw, 1.25rem);
+      line-height: 1.45;
+    }
+
+    .market-arrow {
+      color: var(--accent);
+      font-size: clamp(2rem, 5vw, 4rem);
+    }
+
+    .market-foot {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-4);
+      margin-top: var(--space-4);
+    }
+
+    .revenue-layout {
+      display: grid;
+      grid-template-columns: minmax(18rem, .85fr) minmax(0, 1.15fr);
+      gap: clamp(2rem, 7vw, 7rem);
+      align-items: end;
+    }
+
+    .bars { display: grid; gap: var(--space-4); }
+    .bar-row { display: grid; gap: .65rem; }
+    .bar-head { display: flex; justify-content: space-between; gap: 1rem; }
+    .bar-head strong { font-size: 1.15rem; }
+    .stacked-bar {
+      display: flex;
+      width: 100%;
+      height: clamp(3.3rem, 6vw, 5.5rem);
+      overflow: hidden;
+      border: 1px solid var(--ink);
+    }
+    .stacked-bar span { min-width: 0; }
+    .mid { background: var(--accent); }
+    .enterprise { background: var(--blue); }
+    .services { background: #d8c9a9; }
+
+    .legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-3);
+      margin-top: var(--space-3);
+      font-size: .83rem;
+    }
+    .legend span::before {
+      content: "";
+      display: inline-block;
+      width: .72rem;
+      height: .72rem;
+      margin-right: .4rem;
+      background: var(--swatch);
+    }
+
+    .growth-notes {
+      display: grid;
+      gap: var(--space-3);
+      padding-left: 0;
+      list-style: none;
+    }
+    .growth-notes li {
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+      padding-bottom: var(--space-2);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .tab-shell { max-width: 62rem; }
+    .tab-list {
+      display: flex;
+      gap: .3rem;
+      width: fit-content;
+      margin-bottom: var(--space-4);
+      padding: .28rem;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+    }
+    .tab {
+      border: 0;
+      border-radius: 999px;
+      padding: .65rem 1rem;
+      background: transparent;
+      cursor: pointer;
+      font-weight: 700;
+    }
+    .tab[aria-selected="true"] { background: var(--ink); color: var(--white); }
+    .tab-panel[hidden] { display: none; }
+    .paired-metrics {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: clamp(1.5rem, 5vw, 5rem);
+    }
+    .change-line {
+      padding-block: var(--space-4);
+      border-block: 1px solid var(--line);
+    }
+    .change-line__values {
+      display: flex;
+      align-items: baseline;
+      gap: var(--space-2);
+      margin: var(--space-2) 0;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(3rem, 7vw, 6rem);
+      letter-spacing: -.06em;
+      line-height: 1;
+    }
+    .change-line__values i { color: var(--accent); font-size: .55em; font-style: normal; }
+
+    .comparison-wrap { overflow-x: auto; }
+    .comparison {
+      width: 100%;
+      min-width: 43rem;
+      border-collapse: collapse;
+      font-variant-numeric: tabular-nums;
+    }
+    .comparison th, .comparison td {
+      padding: 1rem .8rem;
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+    }
+    .comparison thead th {
+      color: var(--muted);
+      font-size: .73rem;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+    .comparison tbody tr:first-child { background: rgba(223, 77, 47, .09); }
+    .comparison tbody th { border-left: 4px solid transparent; }
+    .comparison tbody tr:first-child th { border-left-color: var(--accent); }
+    .tradeoff {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: var(--space-4);
+      margin-top: var(--space-4);
+    }
+
+    .timeline {
+      display: grid;
+      grid-template-columns: repeat(6, minmax(8.5rem, 1fr));
+      gap: 0;
+      margin-top: var(--space-5);
+      overflow-x: auto;
+      padding: .3rem .1rem 1rem;
+    }
+    .milestone {
+      position: relative;
+      min-height: 13rem;
+      padding: var(--space-4) var(--space-3) 0 0;
+      border-top: 2px solid var(--ink);
+    }
+    .milestone::before {
+      content: "";
+      position: absolute;
+      top: -.55rem;
+      width: .9rem;
+      height: .9rem;
+      border: 2px solid var(--paper);
+      border-radius: 50%;
+      background: var(--green);
+    }
+    .milestone.future { border-top-style: dashed; }
+    .milestone.future::before { background: var(--accent); }
+    .milestone time {
+      display: block;
+      margin-bottom: .7rem;
+      color: var(--muted);
+      font-size: .74rem;
+      font-weight: 750;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    .risk-stage {
+      display: grid;
+      grid-template-columns: minmax(0, 1.2fr) minmax(16rem, .8fr);
+      gap: clamp(2rem, 7vw, 7rem);
+      align-items: end;
+    }
+    .risk-number {
+      color: var(--accent);
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(7rem, 19vw, 16rem);
+      letter-spacing: -.09em;
+      line-height: .75;
+    }
+    .risk-list { display: grid; gap: var(--space-3); }
+    .risk-list article { padding-top: var(--space-3); border-top: 1px solid var(--line); }
+
+    .closing { background: #e1dfd3; }
+    .closing h2 { max-width: 13ch; }
+    .closing-points {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: var(--space-4);
+      margin-top: var(--space-5);
+    }
+    .closing-points article { padding-top: var(--space-3); border-top: 3px solid var(--ink); }
+
+    .source-note {
+      width: min(100%, 72rem);
+      margin-top: var(--space-4);
+      border-top: 1px solid var(--line);
+      padding-top: var(--space-2);
+    }
+    .source-note summary {
+      width: fit-content;
+      cursor: pointer;
+      color: var(--muted);
+      font-weight: 700;
+    }
+    .source-note p { max-width: 68rem; margin: .7rem 0 0; }
+    .hero .source-note { border-color: #566158; }
+    .hero .source-note, .hero .source-note summary { color: #bdc8c0; }
+
+    .deck-controls {
+      position: fixed;
+      right: clamp(.8rem, 2vw, 1.6rem);
+      bottom: clamp(.8rem, 2vw, 1.6rem);
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      gap: .35rem;
+      padding: .42rem;
+      border: 1px solid rgba(24, 34, 29, .22);
+      border-radius: 999px;
+      background: rgba(255, 253, 248, .94);
+      box-shadow: 0 8px 28px rgba(24, 34, 29, .12);
+      backdrop-filter: blur(8px);
+    }
+    .deck-controls button {
+      min-width: 2.7rem;
+      min-height: 2.7rem;
+      border: 0;
+      border-radius: 50%;
+      background: transparent;
+      cursor: pointer;
+      font-weight: 750;
+    }
+    .deck-controls button:hover { background: #e8e5dc; }
+    .deck-controls button:disabled { opacity: .35; cursor: not-allowed; }
+    .slide-counter {
+      min-width: 4.25rem;
+      text-align: center;
+      font-size: .8rem;
+      font-variant-numeric: tabular-nums;
+    }
+    .progress-track {
+      position: fixed;
+      inset: 0 0 auto;
+      z-index: 12;
+      height: 4px;
+      background: rgba(24, 34, 29, .12);
+    }
+    .progress-bar {
+      width: 0;
+      height: 100%;
+      background: var(--accent);
+      transition: width .3s ease;
+    }
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    @keyframes reveal {
+      from { opacity: 0; transform: translateY(.6rem); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 62rem) {
+      .slide { align-items: start; }
+      .split, .metric-stage, .revenue-layout, .risk-stage { grid-template-columns: 1fr; }
+      .metric-stage, .risk-stage { align-items: start; }
+      .market-foot { grid-template-columns: 1fr; }
+      .process { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: var(--space-4); }
+      .tradeoff, .closing-points { grid-template-columns: 1fr; gap: var(--space-3); }
+      .risk-number { font-size: clamp(6rem, 24vw, 11rem); }
+    }
+
+    @media (max-width: 48rem) {
+      .slide {
+        min-height: 100dvh;
+        padding: 3.1rem max(1rem, env(safe-area-inset-left)) 6.7rem;
+        overflow: visible;
+      }
+      .slide__inner {
+        width: min(100%, 22rem);
+        margin-inline: 0;
+      }
+      h1 { font-size: clamp(3rem, 12vw, 4rem); }
+      h2 { font-size: clamp(2.35rem, 12vw, 3.75rem); }
+      .lede { font-size: 1.08rem; }
+      .hero__meta { grid-template-columns: 1fr; }
+      .metric-primary strong { font-size: clamp(6.5rem, 31vw, 9rem); }
+      .metric-stack { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-3); }
+      .evidence-list li { grid-template-columns: 5rem 1fr; }
+      .process { grid-template-columns: 1fr; border-top: 0; margin-top: var(--space-4); }
+      .process__step { padding-top: var(--space-3); border-top: 1px solid var(--line); }
+      .process__step::before { display: none; }
+      .market-path { grid-template-columns: 1fr; gap: var(--space-2); }
+      .market-arrow { transform: rotate(90deg); width: fit-content; }
+      .market-year strong { font-size: clamp(4.5rem, 25vw, 6.5rem); }
+      .paired-metrics { grid-template-columns: 1fr; }
+      .change-line__values { font-size: clamp(3rem, 18vw, 4.8rem); }
+      .comparison-wrap { overflow: visible; }
+      .comparison { min-width: 0; }
+      .comparison thead {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+      }
+      .comparison, .comparison tbody, .comparison tr, .comparison th, .comparison td { display: block; }
+      .comparison tbody tr {
+        padding: var(--space-3) 0;
+        border-top: 1px solid var(--line);
+      }
+      .comparison tbody tr:first-child { background: transparent; }
+      .comparison tbody th {
+        padding: 0 0 var(--space-2);
+        border: 0;
+        font-size: 1.12rem;
+      }
+      .comparison tbody tr:first-child th { border-left: 0; color: var(--accent-dark); }
+      .comparison tbody td {
+        display: grid;
+        grid-template-columns: 7.6rem minmax(0, 1fr);
+        gap: var(--space-2);
+        padding: .38rem 0;
+        border: 0;
+      }
+      .comparison tbody td::before {
+        content: attr(data-label);
+        color: var(--muted);
+        font-size: .7rem;
+        font-weight: 750;
+        letter-spacing: .07em;
+        text-transform: uppercase;
+      }
+      .timeline {
+        grid-template-columns: 1fr;
+        overflow: visible;
+        margin-top: var(--space-4);
+        padding-left: 1rem;
+      }
+      .milestone {
+        min-height: 0;
+        padding: 0 0 var(--space-4) var(--space-4);
+        border-top: 0;
+        border-left: 2px solid var(--ink);
+      }
+      .milestone.future { border-left-style: dashed; }
+      .milestone::before { top: 0; left: -.55rem; }
+      .risk-number { font-size: clamp(7rem, 38vw, 10rem); }
+      .source-note { margin-top: var(--space-3); }
+      .deck-controls {
+        right: auto;
+        left: max(.65rem, env(safe-area-inset-left));
+        bottom: max(.65rem, env(safe-area-inset-bottom));
+      }
+      .deck-controls button { min-width: 2.55rem; min-height: 2.55rem; }
+      #fullscreen { display: none; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        scroll-behavior: auto !important;
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: .01ms !important;
+      }
+    }
+
+    @media print {
+      .slide { display: grid !important; min-height: 100vh; break-after: page; }
+      .deck-controls, .progress-track, .skip-link { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#slide-1">Skip to presentation</a>
+  <main class="presentation" aria-label="LumaFlow H1 2026 fictional test presentation">
+    <section class="slide hero is-active" id="slide-1" data-slide aria-labelledby="title-1">
+      <div class="slide__inner">
+        <span class="test-label">Fictional test material</span>
+        <p class="eyebrow">LumaFlow · H1 2026 business report</p>
+        <h1 id="title-1">Momentum, with execution risk in view.</h1>
+        <p class="lede">Revenue, conversion, and retention strengthened in the first half. The next chapter depends on capacity, cost control, and disciplined delivery.</p>
+        <div class="hero__meta">
+          <p class="small">Reporting period<br><strong>January 1–June 30, 2026</strong></p>
+          <p class="small">Prepared July 15, 2026 · USD</p>
+        </div>
+        <details class="source-note">
+          <summary>Source &amp; status</summary>
+          <p>Source: <a href="sample-report.md">LumaFlow H1 2026 Business Report</a>, a deliberately fictional fixture. All companies, people, research, metrics, and events are invented for testing and should not be treated as real-world claims.</p>
+        </details>
+      </div>
+    </section>
+
+    <section class="slide" id="slide-2" data-slide aria-labelledby="title-2">
+      <div class="slide__inner">
+        <p class="eyebrow">The half in one view</p>
+        <div class="metric-stage">
+          <div class="metric-primary">
+            <strong>$6.6M</strong>
+            <p id="title-2">H1 2026 revenue, up 32% from $5.0M in H1 2025.</p>
+          </div>
+          <div class="metric-stack" aria-label="Additional growth metrics">
+            <div class="metric-stack__item">
+              <strong>480</strong>
+              <span>customers · +28% year over year</span>
+            </div>
+            <div class="metric-stack__item">
+              <strong>$15.0M</strong>
+              <span>ARR at June 30, up from $11.5M at Dec. 31, 2025</span>
+            </div>
+          </div>
+        </div>
+        <details class="source-note">
+          <summary>Source &amp; calculation notes</summary>
+          <p>Source: sample report, Executive Summary. Reported values: $6.6M, $5.0M, 480, 375, $15.0M, and $11.5M. Revenue growth of 32% and customer growth of 28% are reported in the source; periods differ for the ARR comparison.</p>
+        </details>
+      </div>
+    </section>
+
+    <section class="slide" id="slide-3" data-slide aria-labelledby="title-3">
+      <div class="slide__inner split">
+        <div>
+          <p class="eyebrow">The operating gap</p>
+          <h2 id="title-3">Work crosses tools. Accountability falls between them.</h2>
+          <p class="lede">The target customer manages recurring operational work across disconnected systems, creating missed handoffs and weak completion visibility.</p>
+        </div>
+        <ul class="evidence-list" aria-label="Problem evidence">
+          <li><strong>64%</strong><span>of surveyed operations leaders said fragmented tools caused missed handoffs at least monthly.</span></li>
+          <li><strong>47%</strong><span>said they could not reliably measure whether recurring processes were completed on time.</span></li>
+          <li><strong>18</strong><span>recurring processes across at least four tools for the estimated typical customer.</span></li>
+        </ul>
+        <details class="source-note">
+          <summary>Source &amp; limitations</summary>
+          <p>Source: sample report, The Problem. The 64% and 47% figures come from a fictional, unaudited online survey of 240 U.S. and Canadian operations leaders in February 2026. The “18 processes / four tools” estimate comes from 60 fictional interviews conducted October 2025–March 2026. Survey responses reflect respondent opinion and may not generalize.</p>
+        </details>
+      </div>
+    </section>
+
+    <section class="slide" id="slide-4" data-slide aria-labelledby="title-4">
+      <div class="slide__inner">
+        <p class="eyebrow">The product thesis</p>
+        <h2 id="title-4">Turn recurring work into a governed operating system.</h2>
+        <p class="lede">LumaFlow sits between general task management and enterprise automation: structured enough for control, lighter-weight enough for faster deployment.</p>
+        <div class="process" aria-label="Product workflow">
+          <article class="process__step"><span>01 · Map</span><h3>Templates</h3><p class="small">Standardize recurring processes.</p></article>
+          <article class="process__step"><span>02 · Govern</span><h3>Approvals</h3><p class="small">Route decisions conditionally.</p></article>
+          <article class="process__step"><span>03 · Run</span><h3>Integrations</h3><p class="small">Connect work across systems.</p></article>
+          <article class="process__step"><span>04 · Verify</span><h3>Audit logs</h3><p class="small">Make completion observable.</p></article>
+        </div>
+        <p class="lede accent-rule" style="padding-top: 1rem; margin-top: 2.5rem;"><strong>21 days</strong> median initial deployment for customers launched in H1 2026.</p>
+        <details class="source-note">
+          <summary>Source &amp; definition</summary>
+          <p>Source: sample report, The Solution. Deployment is measured from signed agreement to first live workflow. The 21-day median is a historical result for the stated cohort, not a guarantee for future customers.</p>
+        </details>
+      </div>
+    </section>
+
+    <section class="slide" id="slide-5" data-slide aria-labelledby="title-5">
+      <div class="slide__inner">
+        <p class="eyebrow">Market opportunity</p>
+        <h2 id="title-5">A focused category moving toward $3.6B.</h2>
+        <div class="market-path" aria-label="Market size growth from 2026 to 2030">
+          <div class="market-year"><span class="small">2026</span><strong>$2.4B</strong><span>North American market estimate</span></div>
+          <div class="market-arrow" aria-hidden="true">→</div>
+          <div class="market-year"><span class="small">2030</span><strong>$3.6B</strong><span>North American market estimate</span></div>
+        </div>
+        <div class="market-foot">
+          <p><strong>≈10.7% CAGR</strong><br><span class="small">Derived from the two source estimates over four years.</span></p>
+          <p><strong>$480M obtainable market</strong><br><span class="small">Management estimate for 2026, equal to 20% of the total estimate.</span></p>
+        </div>
+        <details class="source-note">
+          <summary>Source, scope &amp; derivation</summary>
+          <p>Source: sample report, Market Opportunity. Internal fictional research; not audited or guaranteed. Scope covers workflow-operations software for organizations with 200–5,000 employees and excludes general project management and robotic process automation. CAGR is derived as ($3.6B ÷ $2.4B)^(1/4) − 1 ≈ 10.7%.</p>
+        </details>
+      </div>
+    </section>
+
+    <section class="slide" id="slide-6" data-slide aria-labelledby="title-6">
+      <div class="slide__inner revenue-layout">
+        <div>
+          <p class="eyebrow">Revenue composition</p>
+          <h2 id="title-6">Growth came from subscriptions—not services.</h2>
+          <ul class="growth-notes" aria-label="Derived segment growth">
+            <li><span>Mid-market</span><strong>+40.0%</strong></li>
+            <li><span>Enterprise</span><strong>≈+28.6%</strong></li>
+            <li><span>Services</span><strong>0%</strong></li>
+          </ul>
+        </div>
+        <div class="bars" aria-label="Revenue by segment in millions of U.S. dollars">
+          <div class="bar-row">
+            <div class="bar-head"><span>H1 2025</span><strong>$5.0M</strong></div>
+            <div class="stacked-bar" aria-label="H1 2025: mid-market 3.0 million, enterprise 1.4 million, services 0.6 million">
+              <span class="mid" style="width:60%"></span><span class="enterprise" style="width:28%"></span><span class="services" style="width:12%"></span>
+            </div>
+          </div>
+          <div class="bar-row">
+            <div class="bar-head"><span>H1 2026</span><strong>$6.6M</strong></div>
+            <div class="stacked-bar" aria-label="H1 2026: mid-market 4.2 million, enterprise 1.8 million, services 0.6 million">
+              <span class="mid" style="width:63.636%"></span><span class="enterprise" style="width:27.273%"></span><span class="services" style="width:9.091%"></span>
+            </div>
+          </div>
+          <div class="legend" aria-label="Revenue segment legend">
+            <span style="--swatch:var(--accent)">Mid-market subscriptions</span>
+            <span style="--swatch:var(--blue)">Enterprise subscriptions</span>
+            <span style="--swatch:#d8c9a9">Professional services</span>
+          </div>
+          <p class="caption">Bar widths show each period's revenue mix; total bar lengths are normalized and should not be compared as absolute scale.</p>
+        </div>
+        <details class="source-note">
+          <summary>Source &amp; calculation notes</summary>
+          <p>Source: sample report, Product Performance. Reported segment values sum to the reported totals: $3.0M + $1.4M + $0.6M = $5.0M; $4.2M + $1.8M + $0.6M = $6.6M. Segment growth rates are derived from those inputs.</p>
+        </details>
+      </div>
+    </section>
+
+    <section class="slide" id="slide-7" data-slide aria-labelledby="title-7">
+      <div class="slide__inner tab-shell">
+        <p class="eyebrow">Product performance</p>
+        <h2 id="title-7">The funnel strengthened at both ends.</h2>
+        <div class="tab-list" role="tablist" aria-label="Performance views">
+          <button class="tab" id="tab-acquisition" type="button" role="tab" aria-selected="true" aria-controls="panel-acquisition">Acquisition</button>
+          <button class="tab" id="tab-retention" type="button" role="tab" aria-selected="false" aria-controls="panel-retention" tabindex="-1">Retention</button>
+        </div>
+        <div class="tab-panel" id="panel-acquisition" role="tabpanel" aria-labelledby="tab-acquisition">
+          <div class="paired-metrics">
+            <article class="change-line"><h3>Trial-to-paid conversion</h3><div class="change-line__values"><span>10%</span><i>→</i><span>14%</span></div><p class="small">H1 2025 to H1 2026 · +4 percentage points</p></article>
+            <article class="change-line"><h3>Average monthly active users</h3><div class="change-line__values"><span>38</span><i>→</i><span>46</span></div><p class="small">per customer · H1 2025 to H1 2026</p></article>
+          </div>
+        </div>
+        <div class="tab-panel" id="panel-retention" role="tabpanel" aria-labelledby="tab-retention" hidden>
+          <div class="paired-metrics">
+            <article class="change-line"><h3>Gross customer retention</h3><div class="change-line__values"><span>88%</span><i>→</i><span>91%</span></div><p class="small">Excludes account expansion.</p></article>
+            <article class="change-line"><h3>Net revenue retention</h3><div class="change-line__values"><span>103%</span><i>→</i><span>108%</span></div><p class="small">Includes upgrades and contraction.</p></article>
+          </div>
+        </div>
+        <p class="caption" style="margin-top: 1.2rem;">Use the tabs to compare acquisition and retention evidence. Both views are summarized by the persistent headline.</p>
+        <details class="source-note">
+          <summary>Source &amp; definitions</summary>
+          <p>Source: sample report, Product Performance and Executive Summary. Retention figures use trailing 12-month periods ending June 30 of the stated year. Gross retention excludes expansion; net revenue retention includes upgrades and contraction.</p>
+        </details>
+      </div>
+    </section>
+
+    <section class="slide" id="slide-8" data-slide aria-labelledby="title-8">
+      <div class="slide__inner">
+        <p class="eyebrow">Competitive comparison</p>
+        <h2 id="title-8">LumaFlow leads on speed and retention—with tradeoffs.</h2>
+        <div class="comparison-wrap" tabindex="0" aria-label="Scrollable competitor comparison">
+          <table class="comparison">
+            <thead><tr><th scope="col">Vendor</th><th scope="col">Starting annual price</th><th scope="col">Typical deployment</th><th scope="col">Gross retention</th><th scope="col">Integrations</th></tr></thead>
+            <tbody>
+              <tr><th scope="row">LumaFlow</th><td data-label="Starting price">$15,000</td><td data-label="Deployment">21 days</td><td data-label="Gross retention">91%</td><td data-label="Integrations">48</td></tr>
+              <tr><th scope="row">NorthstarOps</th><td data-label="Starting price">$22,000</td><td data-label="Deployment">35 days</td><td data-label="Gross retention">89%</td><td data-label="Integrations">60</td></tr>
+              <tr><th scope="row">TaskHarbor</th><td data-label="Starting price">$12,000</td><td data-label="Deployment">45 days</td><td data-label="Gross retention">84%</td><td data-label="Integrations">32</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="tradeoff">
+          <p><strong>Speed</strong><br><span class="small">LumaFlow has the shortest stated deployment.</span></p>
+          <p><strong>Breadth</strong><br><span class="small">NorthstarOps lists 12 more integrations.</span></p>
+          <p><strong>Entry price</strong><br><span class="small">TaskHarbor starts $3,000 lower.</span></p>
+        </div>
+        <details class="source-note">
+          <summary>Source &amp; limitations</summary>
+          <p>Source: sample report, Competitive Comparison. Fictional, directional review based on public vendor materials and 30 fictional buyer evaluations completed by June 2026; competitor metrics were not independently verified. Starting price excludes implementation and varies by contract. Do not treat the comparison as a market-wide ranking.</p>
+        </details>
+      </div>
+    </section>
+
+    <section class="slide" id="slide-9" data-slide aria-labelledby="title-9">
+      <div class="slide__inner">
+        <p class="eyebrow">Execution timeline</p>
+        <h2 id="title-9">Four milestones landed. Two remain forward-looking.</h2>
+        <div class="timeline" aria-label="2026 company timeline">
+          <article class="milestone"><time datetime="2026-01-22">Jan 22 · Completed</time><h3>Rules engine</h3><p class="small">Conditional approval release completed.</p></article>
+          <article class="milestone"><time datetime="2026-03-31">Mar 31 · Completed</time><h3>450 customers</h3><p class="small">Customer milestone reached.</p></article>
+          <article class="milestone"><time datetime="2026-05-18">May 18 · Completed</time><h3>EU environment</h3><p class="small">EU-hosted data environment completed.</p></article>
+          <article class="milestone"><time datetime="2026-06-30">Jun 30 · Completed</time><h3>$15M ARR</h3><p class="small">480 customers and $15.0M ARR reported.</p></article>
+          <article class="milestone future"><time datetime="2026-09-30">Sep 30 · Planned</time><h3>Analytics</h3><p class="small">Process analytics launch planned.</p></article>
+          <article class="milestone future"><time datetime="2026-12-31">Dec 31 · Target</time><h3>$18M ARR</h3><p class="small">Year-end management target.</p></article>
+        </div>
+        <details class="source-note">
+          <summary>Source &amp; forward-looking status</summary>
+          <p>Source: sample report, Timeline. The September launch is planned and the December ARR figure is a management target; neither is a completed result. The target depends on product delivery, conversion, and churn assumptions.</p>
+        </details>
+      </div>
+    </section>
+
+    <section class="slide" id="slide-10" data-slide aria-labelledby="title-10">
+      <div class="slide__inner">
+        <p class="eyebrow">Risks and constraints</p>
+        <div class="risk-stage">
+          <div>
+            <div class="risk-number" aria-label="24 percent">24%</div>
+            <h2 id="title-10">of ARR sits with the top 10 customers.</h2>
+            <p class="small">As of June 30, 2026.</p>
+          </div>
+          <div class="risk-list">
+            <article><h3>Infrastructure pressure</h3><p class="small">Cloud expense was 18% of H1 revenue, above management's 15% target.</p></article>
+            <article><h3>Implementation capacity</h3><p class="small">Six people supported onboarding and complex rollouts.</p></article>
+            <article><h3>Hiring dependency</h3><p class="small">The operating plan assumes eight additional engineers by December 2026.</p></article>
+          </div>
+        </div>
+        <details class="source-note">
+          <summary>Source &amp; additional limitations</summary>
+          <p>Source: sample report, Risks and Constraints. Market estimates rely on internal assumptions; competitor information may be incomplete; survey findings may not generalize. Product delivery, conversion, churn, infrastructure cost, customer concentration, implementation capacity, and hiring all affect the outlook.</p>
+        </details>
+      </div>
+    </section>
+
+    <section class="slide closing" id="slide-11" data-slide aria-labelledby="title-11">
+      <div class="slide__inner">
+        <p class="eyebrow">Conclusion</p>
+        <h2 id="title-11">The growth case is credible. Execution determines what follows.</h2>
+        <div class="closing-points">
+          <article><h3>Momentum</h3><p class="small">Revenue, customer count, conversion, usage, and retention improved.</p></article>
+          <article><h3>Position</h3><p class="small">Deployment speed and mid-market subscription growth are the clearest advantages.</p></article>
+          <article><h3>Watchpoints</h3><p class="small">Concentration, cloud cost, capacity, hiring, and product delivery constrain the outlook.</p></article>
+        </div>
+        <p class="lede" style="margin-top: 2.5rem;">Historical evidence supports continued investment, but the $18.0M year-end ARR target remains separate from completed results.</p>
+        <details class="source-note">
+          <summary>Source &amp; status</summary>
+          <p>Source: sample report, Conclusion and Timeline. This deck is a fictional test artifact, not investment advice, a forecast, or a claim about any real company.</p>
+        </details>
+      </div>
+    </section>
+  </main>
+
+  <div class="progress-track" aria-hidden="true"><div class="progress-bar" id="progress-bar"></div></div>
+  <nav class="deck-controls" aria-label="Presentation controls">
+    <button id="previous" type="button" aria-label="Previous slide">←</button>
+    <span class="slide-counter" aria-live="polite"><span id="current-slide">1</span> / <span id="total-slides">11</span></span>
+    <button id="next" type="button" aria-label="Next slide">→</button>
+    <button id="fullscreen" type="button" aria-label="Enter fullscreen">⛶</button>
+  </nav>
+  <p class="sr-only" id="keyboard-help">Use Left and Right Arrow keys to navigate. Space advances. Use the performance tabs with Arrow keys when focused.</p>
+
+  <script>
+    (() => {
+      const slides = [...document.querySelectorAll('.slide')];
+      const previous = document.querySelector('#previous');
+      const next = document.querySelector('#next');
+      const fullscreen = document.querySelector('#fullscreen');
+      const current = document.querySelector('#current-slide');
+      const total = document.querySelector('#total-slides');
+      const progress = document.querySelector('#progress-bar');
+      let index = 0;
+
+      const hashIndex = () => {
+        const match = window.location.hash.match(/^#slide-(\d+)$/);
+        return match ? Math.min(Math.max(Number(match[1]) - 1, 0), slides.length - 1) : 0;
+      };
+
+      function showSlide(nextIndex, updateHash = true) {
+        index = Math.min(Math.max(nextIndex, 0), slides.length - 1);
+        slides.forEach((slide, slideIndex) => {
+          const active = slideIndex === index;
+          slide.classList.toggle('is-active', active);
+          slide.setAttribute('aria-hidden', String(!active));
+          if ('inert' in slide) slide.inert = !active;
+        });
+        current.textContent = String(index + 1);
+        total.textContent = String(slides.length);
+        progress.style.width = `${((index + 1) / slides.length) * 100}%`;
+        previous.disabled = index === 0;
+        next.disabled = index === slides.length - 1;
+        if (updateHash) history.replaceState(null, '', `#slide-${index + 1}`);
+        document.title = `LumaFlow H1 2026 — ${index + 1}/${slides.length}`;
+      }
+
+      previous.addEventListener('click', () => showSlide(index - 1));
+      next.addEventListener('click', () => showSlide(index + 1));
+
+      document.addEventListener('keydown', (event) => {
+        const target = event.target;
+        const inControl = target.closest('button, a, summary, input, textarea, select, [role="tab"]');
+        if (inControl) return;
+        if (event.key === 'ArrowRight' || event.key === ' ') {
+          event.preventDefault();
+          showSlide(index + 1);
+        } else if (event.key === 'ArrowLeft') {
+          event.preventDefault();
+          showSlide(index - 1);
+        } else if (event.key === 'Home') {
+          event.preventDefault();
+          showSlide(0);
+        } else if (event.key === 'End') {
+          event.preventDefault();
+          showSlide(slides.length - 1);
+        }
+      });
+
+      window.addEventListener('hashchange', () => showSlide(hashIndex(), false));
+
+      if (!document.fullscreenEnabled) {
+        fullscreen.hidden = true;
+      } else {
+        fullscreen.addEventListener('click', async () => {
+          if (document.fullscreenElement) await document.exitFullscreen();
+          else await document.documentElement.requestFullscreen();
+        });
+        document.addEventListener('fullscreenchange', () => {
+          fullscreen.setAttribute('aria-label', document.fullscreenElement ? 'Exit fullscreen' : 'Enter fullscreen');
+        });
+      }
+
+      const tabs = [...document.querySelectorAll('[role="tab"]')];
+      function selectTab(tab, focus = false) {
+        tabs.forEach((item) => {
+          const selected = item === tab;
+          item.setAttribute('aria-selected', String(selected));
+          item.tabIndex = selected ? 0 : -1;
+          document.querySelector(`#${item.getAttribute('aria-controls')}`).hidden = !selected;
+        });
+        if (focus) tab.focus();
+      }
+      tabs.forEach((tab, tabIndex) => {
+        tab.addEventListener('click', () => selectTab(tab));
+        tab.addEventListener('keydown', (event) => {
+          if (!['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key)) return;
+          event.preventDefault();
+          let nextTab = tabIndex;
+          if (event.key === 'ArrowRight') nextTab = (tabIndex + 1) % tabs.length;
+          if (event.key === 'ArrowLeft') nextTab = (tabIndex - 1 + tabs.length) % tabs.length;
+          if (event.key === 'Home') nextTab = 0;
+          if (event.key === 'End') nextTab = tabs.length - 1;
+          selectTab(tabs[nextTab], true);
+        });
+      });
+
+      showSlide(hashIndex(), false);
+    })();
+  </script>
+</body>
+</html>

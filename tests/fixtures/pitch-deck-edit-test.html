@@ -1,0 +1,856 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="FlowPilot fictional investor pitch deck test fixture.">
+  <title>FlowPilot — Fictional Pitch Deck</title>
+  <style>
+    :root {
+      --night: #111b24;
+      --night-2: #1b2934;
+      --paper: #f2efe6;
+      --white: #fffdf8;
+      --ink: #17212a;
+      --muted: #657078;
+      --line: #c9cbc4;
+      --lime: #c7f36b;
+      --lime-dark: #54731e;
+      --coral: #f06449;
+      --blue: #38759b;
+      --sand: #d9cbaa;
+      --s1: .45rem;
+      --s2: .8rem;
+      --s3: 1.25rem;
+      --s4: 2rem;
+      --s5: 3.25rem;
+      --radius: .55rem;
+    }
+
+    * { box-sizing: border-box; }
+    html {
+      min-width: 0;
+      background: #d7d8d4;
+      color: var(--ink);
+      font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      overflow-x: hidden;
+    }
+    body { min-width: 0; margin: 0; overflow-x: hidden; }
+    button, summary { font: inherit; }
+    a { color: inherit; text-underline-offset: .18em; }
+    :focus-visible { outline: 3px solid var(--coral); outline-offset: 3px; }
+
+    .skip-link {
+      position: fixed;
+      top: -5rem;
+      left: 1rem;
+      z-index: 30;
+      padding: .7rem 1rem;
+      background: var(--white);
+      color: var(--night);
+    }
+    .skip-link:focus { top: 1rem; }
+
+    .presentation { min-height: 100dvh; }
+    .slide {
+      display: none;
+      min-height: 100dvh;
+      padding: clamp(2.8rem, 6vw, 6rem) clamp(1.4rem, 7vw, 7.5rem) 7.5rem;
+      background: var(--paper);
+      font-size: 1.03rem;
+      overflow: hidden;
+    }
+    .slide.is-active {
+      display: grid;
+      align-items: center;
+      animation: enter .38s ease-out both;
+    }
+    .slide__inner { width: min(100%, 78rem); margin-inline: auto; }
+
+    h1, h2, h3, p { margin-top: 0; }
+    h1, h2 {
+      max-width: 15ch;
+      margin-bottom: clamp(2.25rem, 3vw, 2.75rem);
+      font-family: Georgia, "Times New Roman", serif;
+      font-weight: 500;
+      letter-spacing: -.048em;
+      line-height: .97;
+      text-wrap: balance;
+    }
+    h1 { font-size: clamp(3.7rem, 8.5vw, 8.2rem); }
+    h2 { font-size: clamp(2.7rem, 5.6vw, 5.7rem); }
+    h3 { margin-bottom: .55rem; font-size: clamp(1rem, 1.5vw, 1.3rem); line-height: 1.2; }
+    p { line-height: 1.52; }
+
+    .eyebrow {
+      margin-bottom: var(--s3);
+      color: #a23421;
+      font-size: .78rem;
+      font-weight: 800;
+      letter-spacing: .13em;
+      text-transform: uppercase;
+    }
+    .lede {
+      max-width: 42rem;
+      margin-bottom: var(--s4);
+      color: #37444b;
+      font-size: clamp(1.1rem, 1.8vw, 1.5rem);
+      line-height: 1.58;
+    }
+    .small, .caption, .source-note { color: var(--muted); font-size: .9rem; line-height: 1.62; }
+    .test-badge {
+      display: inline-block;
+      margin-bottom: var(--s4);
+      padding: .38rem .7rem;
+      border: 1px solid currentColor;
+      color: var(--coral);
+      font-size: .76rem;
+      font-weight: 800;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+    .rule-top { padding-top: var(--s3); border-top: 1px solid var(--line); }
+
+    .dark { background: var(--night); color: var(--white); }
+    .dark .eyebrow { color: var(--lime); }
+    .dark .lede { color: #dbe1dc; }
+    .dark .small, .dark .source-note, .dark .source-note summary { color: #aab7b0; }
+    .dark .source-note { border-color: #43515b; }
+
+    .hero h1 { max-width: 11ch; }
+    .hero__wordmark {
+      display: flex;
+      align-items: center;
+      gap: .7rem;
+      margin-bottom: var(--s5);
+      font-size: 1.05rem;
+      font-weight: 800;
+      letter-spacing: -.02em;
+    }
+    .hero__mark {
+      display: inline-grid;
+      width: 2.15rem;
+      height: 2.15rem;
+      place-items: center;
+      border-radius: 50%;
+      background: var(--lime);
+      color: var(--night);
+    }
+    .hero__footer {
+      display: flex;
+      justify-content: space-between;
+      gap: var(--s3);
+      margin-top: var(--s5);
+      padding-top: var(--s3);
+      border-top: 1px solid #43515b;
+    }
+
+    .problem-grid {
+      display: grid;
+      grid-template-columns: minmax(0, .9fr) minmax(22rem, 1.1fr);
+      gap: clamp(2rem, 7vw, 7rem);
+      align-items: center;
+    }
+    .problem-evidence { display: grid; gap: var(--s4); }
+    .problem-stat {
+      display: grid;
+      grid-template-columns: 9rem minmax(0, 1fr);
+      column-gap: clamp(1.75rem, 3vw, 3rem);
+      align-items: baseline;
+      padding-top: var(--s3);
+      border-top: 1px solid var(--line);
+    }
+    .problem-stat strong {
+      color: var(--coral);
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(3rem, 6vw, 5.7rem);
+      font-weight: 500;
+      letter-spacing: -.06em;
+      line-height: .9;
+    }
+
+    .wedge {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(18rem, .75fr);
+      gap: clamp(2rem, 8vw, 8rem);
+      align-items: end;
+    }
+    .wedge-line {
+      display: grid;
+      gap: var(--s2);
+      padding-block: var(--s4);
+      border-block: 1px solid var(--line);
+    }
+    .wedge-line span { color: var(--muted); }
+    .wedge-line strong { font-size: clamp(1.4rem, 2.5vw, 2.2rem); }
+    .wedge-line .focus { color: #a23421; }
+
+    .orchestration {
+      display: grid;
+      grid-template-columns: 1fr auto 1.25fr auto 1fr;
+      gap: var(--s3);
+      align-items: center;
+      margin-top: var(--s5);
+    }
+    .system-list { display: grid; gap: .55rem; }
+    .system-list span {
+      padding: .65rem 0;
+      border-bottom: 1px solid var(--line);
+      font-weight: 700;
+    }
+    .flow-arrow { color: var(--coral); font-size: 2rem; }
+    .flow-core {
+      padding: clamp(1.5rem, 4vw, 3rem);
+      border: 2px solid var(--ink);
+      background: var(--white);
+    }
+    .flow-core strong {
+      display: block;
+      margin-bottom: .6rem;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(2.2rem, 4vw, 4rem);
+      font-weight: 500;
+      letter-spacing: -.05em;
+    }
+    .outcome { font-size: clamp(1.2rem, 2vw, 1.65rem); font-weight: 750; }
+
+    .proof-layout {
+      display: grid;
+      grid-template-columns: minmax(17rem, .7fr) minmax(0, 1.3fr);
+      gap: clamp(2rem, 7vw, 7rem);
+      align-items: start;
+    }
+    .proof-tabs { display: grid; gap: .45rem; }
+    .proof-tab {
+      width: 100%;
+      padding: .85rem 0;
+      border: 0;
+      border-bottom: 1px solid var(--line);
+      background: transparent;
+      text-align: left;
+      cursor: pointer;
+      font-weight: 750;
+    }
+    .proof-tab[aria-selected="true"] { color: #a23421; border-bottom: 3px solid var(--coral); }
+    .proof-panel[hidden] { display: none; }
+    .proof-result {
+      padding: var(--s5) 0;
+      border-block: 1px solid var(--line);
+    }
+    .proof-result strong {
+      display: block;
+      margin-bottom: clamp(1rem, 2vw, 1.5rem);
+      color: var(--ink);
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(3.8rem, 9vw, 8rem);
+      font-weight: 500;
+      letter-spacing: -.07em;
+      line-height: .86;
+    }
+    .proof-result p { max-width: 34rem; font-size: clamp(1.1rem, 1.8vw, 1.45rem); }
+
+    .traction-stage {
+      display: grid;
+      grid-template-columns: minmax(0, 1.25fr) minmax(16rem, .75fr);
+      gap: clamp(2rem, 7vw, 7rem);
+      align-items: end;
+    }
+    .traction-number {
+      display: block;
+      color: var(--lime);
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(6rem, 15vw, 13rem);
+      font-weight: 500;
+      letter-spacing: -.085em;
+      line-height: .78;
+    }
+    .traction-label {
+      display: block;
+      margin-top: clamp(1.2rem, 2.2vw, 2rem);
+      color: #dbe1dc;
+      font-size: clamp(1.1rem, 1.8vw, 1.45rem);
+    }
+    .traction-side { display: grid; gap: var(--s4); }
+    .traction-side article { padding-top: var(--s3); border-top: 1px solid #43515b; }
+    .traction-side strong {
+      display: block;
+      margin-bottom: .55rem;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(2.5rem, 5vw, 4.5rem);
+      font-weight: 500;
+    }
+
+    .quality-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      gap: clamp(2rem, 7vw, 7rem);
+      align-items: end;
+    }
+    .growth-bars { display: grid; gap: var(--s4); }
+    .growth-row { display: grid; grid-template-columns: 7rem 1fr auto; gap: var(--s3); align-items: center; }
+    .growth-track { height: 1.2rem; background: #d7d8d1; }
+    .growth-fill { height: 100%; background: var(--coral); }
+    .quality-metrics { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--s4); }
+    .quality-metrics article { padding-top: var(--s3); border-top: 1px solid var(--line); }
+    .quality-metrics strong {
+      display: block;
+      margin-bottom: .65rem;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(2.6rem, 5vw, 4.6rem);
+      font-weight: 500;
+    }
+
+    .market-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1.25fr) minmax(15rem, .75fr);
+      gap: clamp(2rem, 7vw, 7rem);
+      align-items: center;
+    }
+    .market-stack { display: grid; gap: var(--s2); }
+    .market-band {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: var(--s3);
+      align-items: baseline;
+      padding: var(--s3) var(--s4);
+      border-left: 5px solid var(--ink);
+      background: var(--white);
+    }
+    .market-band:nth-child(2) { width: 75%; border-color: var(--blue); }
+    .market-band:nth-child(3) { width: 52%; border-color: var(--coral); }
+    .market-band strong { font-family: Georgia, "Times New Roman", serif; font-size: clamp(2.1rem, 4vw, 3.8rem); font-weight: 500; }
+
+    .pricing {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 0;
+      margin-top: var(--s5);
+      border-block: 1px solid var(--line);
+    }
+    .price-tier { padding: var(--s4); border-right: 1px solid var(--line); }
+    .price-tier:last-child { border-right: 0; }
+    .price-tier strong {
+      display: block;
+      margin: var(--s2) 0;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(2.6rem, 5vw, 4.4rem);
+      font-weight: 500;
+      letter-spacing: -.05em;
+    }
+    .acv-equation {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .7rem;
+      align-items: baseline;
+      margin-top: var(--s4);
+      font-size: clamp(1.2rem, 2.2vw, 1.75rem);
+    }
+    .acv-equation strong { color: #a23421; font-size: 1.35em; }
+
+    .comparison-wrap { overflow-x: auto; }
+    .comparison { width: 100%; min-width: 46rem; border-collapse: collapse; font-variant-numeric: tabular-nums; }
+    .comparison th, .comparison td { padding: 1rem .8rem; border-bottom: 1px solid var(--line); text-align: left; }
+    .comparison thead th { color: var(--muted); font-size: .74rem; letter-spacing: .08em; text-transform: uppercase; }
+    .comparison tbody tr:first-child { background: rgba(240, 100, 73, .09); }
+    .comparison tbody th { border-left: 4px solid transparent; }
+    .comparison tbody tr:first-child th { border-left-color: var(--coral); }
+    .position-line {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--s4);
+      margin-top: var(--s4);
+    }
+    .position-line p { padding-top: var(--s3); border-top: 2px solid var(--ink); }
+
+    .gtm {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      margin-top: var(--s5);
+      border-top: 2px solid var(--ink);
+    }
+    .gtm-step { position: relative; padding: var(--s4) var(--s3) 0 0; }
+    .gtm-step::before {
+      content: "";
+      position: absolute;
+      top: -.48rem;
+      width: .8rem;
+      height: .8rem;
+      border: 2px solid var(--paper);
+      border-radius: 50%;
+      background: var(--coral);
+    }
+    .gtm-step span { display: block; margin-bottom: .5rem; color: var(--muted); font-size: .75rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
+    .target-callout {
+      margin-top: var(--s5);
+      padding: var(--s3) 0 var(--s3) var(--s4);
+      border-left: 5px solid var(--coral);
+      font-size: clamp(1.2rem, 2vw, 1.6rem);
+    }
+
+    .team-layout {
+      display: grid;
+      grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr);
+      gap: clamp(2rem, 7vw, 7rem);
+      align-items: end;
+    }
+    .team-count {
+      color: var(--coral);
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(7rem, 17vw, 14rem);
+      letter-spacing: -.08em;
+      line-height: .75;
+    }
+    .leaders { display: grid; gap: var(--s3); }
+    .leaders article { padding-top: var(--s3); border-top: 1px solid var(--line); }
+    .team-mix { display: flex; flex-wrap: wrap; gap: .6rem 1.2rem; margin-top: var(--s4); color: var(--muted); }
+
+    .ask-layout {
+      display: grid;
+      grid-template-columns: minmax(0, .85fr) minmax(0, 1.15fr);
+      gap: clamp(2rem, 7vw, 7rem);
+      align-items: center;
+    }
+    .ask-number {
+      display: block;
+      margin-bottom: clamp(1.2rem, 2vw, 1.8rem);
+      color: var(--lime);
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(6rem, 15vw, 13rem);
+      font-weight: 500;
+      letter-spacing: -.085em;
+      line-height: .78;
+    }
+    .use-bars { display: grid; gap: var(--s3); }
+    .use-row { display: grid; grid-template-columns: 3.3rem 1fr auto; gap: var(--s2); align-items: center; }
+    .use-row strong { color: var(--lime); }
+    .use-track { height: .75rem; background: #43515b; }
+    .use-fill { height: 100%; background: var(--lime); }
+
+    .close-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(16rem, .9fr);
+      gap: clamp(2rem, 7vw, 7rem);
+      align-items: end;
+    }
+    .risk-list { display: grid; gap: var(--s3); }
+    .risk-list p { margin: 0; padding-top: var(--s3); border-top: 1px solid #43515b; }
+
+    .source-note {
+      width: min(100%, 72rem);
+      margin-top: var(--s4);
+      padding-top: var(--s2);
+      border-top: 1px solid var(--line);
+    }
+    .source-note summary { width: fit-content; cursor: pointer; font-weight: 750; }
+    .source-note p { max-width: 68rem; margin: .7rem 0 0; }
+
+    .progress-track { position: fixed; inset: 0 0 auto; z-index: 20; height: 4px; background: rgba(17, 27, 36, .14); }
+    .progress-bar { width: 0; height: 100%; background: var(--coral); transition: width .3s ease; }
+    .deck-controls {
+      position: fixed;
+      right: clamp(.8rem, 2vw, 1.6rem);
+      bottom: clamp(.8rem, 2vw, 1.6rem);
+      z-index: 20;
+      display: flex;
+      align-items: center;
+      gap: .3rem;
+      padding: .42rem;
+      border: 1px solid rgba(17, 27, 36, .22);
+      border-radius: 999px;
+      background: rgba(255, 253, 248, .95);
+      color: var(--night);
+      box-shadow: 0 8px 28px rgba(17, 27, 36, .13);
+      backdrop-filter: blur(8px);
+    }
+    .deck-controls button {
+      min-width: 2.7rem;
+      min-height: 2.7rem;
+      border: 0;
+      border-radius: 50%;
+      background: transparent;
+      cursor: pointer;
+      font-weight: 800;
+    }
+    .deck-controls button:hover { background: #e9e5da; }
+    .deck-controls button:disabled { opacity: .35; cursor: not-allowed; }
+    .counter { min-width: 4.3rem; text-align: center; font-size: .8rem; font-variant-numeric: tabular-nums; }
+    .fictional-flag {
+      position: fixed;
+      left: clamp(.8rem, 2vw, 1.6rem);
+      bottom: clamp(1rem, 2vw, 1.8rem);
+      z-index: 19;
+      color: #6d7475;
+      font-size: .74rem;
+      font-weight: 800;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    @keyframes enter {
+      from { opacity: 0; transform: translateY(.55rem); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 62rem) {
+      .slide { align-items: start; }
+      .problem-grid, .wedge, .proof-layout, .traction-stage, .quality-layout, .market-layout, .team-layout, .ask-layout, .close-grid { grid-template-columns: 1fr; }
+      .problem-grid, .traction-stage, .team-layout, .close-grid { align-items: start; }
+      .orchestration { grid-template-columns: 1fr; }
+      .flow-arrow { transform: rotate(90deg); width: fit-content; }
+      .pricing, .position-line { grid-template-columns: 1fr; }
+      .price-tier { border-right: 0; border-bottom: 1px solid var(--line); }
+      .price-tier:last-child { border-bottom: 0; }
+      .gtm { grid-template-columns: repeat(2, 1fr); row-gap: var(--s4); }
+    }
+
+    @media (max-width: 48rem) {
+      .slide {
+        min-height: 100dvh;
+        padding: 3rem max(1rem, env(safe-area-inset-left)) 7rem;
+        overflow: visible;
+      }
+      .slide__inner { width: min(100%, 22rem); margin-inline: 0; }
+      .slide { font-size: 1rem; }
+      h1 { font-size: clamp(3rem, 12vw, 4rem); }
+      h2 { font-size: clamp(2.35rem, 11vw, 3.55rem); }
+      .lede { font-size: 1.06rem; }
+      .hero__footer { flex-direction: column; }
+      .problem-stat { grid-template-columns: 8.5rem minmax(0, 1fr); column-gap: var(--s3); }
+      .problem-stat strong { font-size: clamp(3rem, 15vw, 4.4rem); }
+      .proof-result strong { font-size: clamp(4.3rem, 23vw, 6.2rem); }
+      .traction-number { font-size: clamp(4.3rem, 20vw, 6.4rem); }
+      .ask-number { font-size: clamp(6rem, 31vw, 8.5rem); }
+      .quality-metrics { grid-template-columns: 1fr; }
+      .growth-row { grid-template-columns: 6rem 1fr auto; gap: var(--s2); }
+      .market-band, .market-band:nth-child(2), .market-band:nth-child(3) { width: 100%; padding: var(--s3); }
+      .pricing { margin-top: var(--s4); }
+      .comparison-wrap { overflow: visible; }
+      .comparison { min-width: 0; }
+      .comparison thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0, 0, 0, 0); }
+      .comparison, .comparison tbody, .comparison tr, .comparison th, .comparison td { display: block; }
+      .comparison tbody tr { padding: var(--s3) 0; border-top: 1px solid var(--line); }
+      .comparison tbody tr:first-child { background: transparent; }
+      .comparison tbody th { padding: 0 0 var(--s2); border: 0; font-size: 1.1rem; }
+      .comparison tbody tr:first-child th { border-left: 0; color: #a23421; }
+      .comparison tbody td { display: grid; grid-template-columns: 7.3rem 1fr; gap: var(--s2); padding: .35rem 0; border: 0; }
+      .comparison tbody td::before { content: attr(data-label); color: var(--muted); font-size: .72rem; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; }
+      .gtm { grid-template-columns: 1fr; border-top: 0; margin-top: var(--s4); }
+      .gtm-step { padding-top: var(--s3); border-top: 1px solid var(--line); }
+      .gtm-step::before { display: none; }
+      .team-count { font-size: clamp(7rem, 38vw, 10rem); }
+      .use-row { grid-template-columns: 3rem 1fr; }
+      .use-row strong { grid-column: 2; }
+      .fictional-flag { position: absolute; left: 1rem; bottom: 1.4rem; }
+      .deck-controls { right: auto; left: max(.65rem, env(safe-area-inset-left)); bottom: max(.65rem, env(safe-area-inset-bottom)); }
+      .deck-controls button { min-width: 2.55rem; min-height: 2.55rem; }
+      #fullscreen { display: none; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        scroll-behavior: auto !important;
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: .01ms !important;
+      }
+    }
+
+    @media print {
+      .slide { display: grid !important; min-height: 100vh; break-after: page; }
+      .deck-controls, .progress-track, .fictional-flag, .skip-link { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#slide-1">Skip to presentation</a>
+  <main class="presentation" aria-label="FlowPilot fictional investor pitch deck">
+    <section class="slide dark hero is-active" id="slide-1" data-slide aria-labelledby="title-1">
+      <div class="slide__inner">
+        <div class="hero__wordmark"><span class="hero__mark" aria-hidden="true">F</span>FlowPilot</div>
+        <span class="test-badge">Fictional test material</span>
+        <p class="eyebrow">Seed pitch · June 30, 2026</p>
+        <h1 id="title-1">Make recurring work run itself.</h1>
+        <p class="lede">FlowPilot coordinates the approvals, owners, evidence, and exceptions that fall between disconnected business systems.</p>
+        <div class="hero__footer"><span class="small">126 paying customers</span><span class="small">$3.024M ARR</span><span class="small">Denver · Founded 2023</span></div>
+        <details class="source-note"><summary>Source &amp; status</summary><p>Source: <a href="pitch-deck-brief.md">FlowPilot Pitch-Deck Brief</a>, Company Overview and Traction. Every company, person, metric, and event in this deck is fictional test material.</p></details>
+      </div>
+    </section>
+
+    <section class="slide" id="slide-2" data-slide aria-labelledby="title-2">
+      <div class="slide__inner problem-grid">
+        <div><p class="eyebrow">The operating gap</p><h2 id="title-2">Systems store the data. People still carry the process.</h2><p class="lede">Recurring work crosses CRM, finance, HR, support, and collaboration tools—then gets stitched together with spreadsheets, messages, and memory.</p></div>
+        <div class="problem-evidence" aria-label="Problem evidence">
+          <div class="problem-stat"><strong>68%</strong><span>reported a delayed cross-functional handoff each month.</span></div>
+          <div class="problem-stat"><strong>52%</strong><span>could not reliably prove every required approval occurred.</span></div>
+          <div class="problem-stat"><strong>11h</strong><span>median time per week spent chasing status and evidence.</span></div>
+        </div>
+        <details class="source-note"><summary>Source &amp; limitations</summary><p>Source: brief, Problem. Fictional, unaudited March 2026 survey of 180 U.S. operations leaders at companies with 250–3,000 employees. Results reflect respondent opinion and may not generalize.</p></details>
+      </div>
+    </section>
+
+    <section class="slide" id="slide-3" data-slide aria-labelledby="title-3">
+      <div class="slide__inner wedge">
+        <div><p class="eyebrow">The wedge</p><h2 id="title-3">Mid-market control without enterprise automation overhead.</h2><p class="lede">FlowPilot is built for organizations large enough to feel cross-system complexity—and lean enough to demand fast adoption.</p></div>
+        <div>
+          <div class="wedge-line"><span>Company size</span><strong class="focus">250–3,000 employees</strong></div>
+          <div class="wedge-line"><span>Environment</span><strong>5+ cloud systems</strong></div>
+          <div class="wedge-line"><span>Starting motion</span><strong>3 workflows</strong></div>
+          <p class="small" style="margin-top:1.2rem;">Priority industries: software, business services, healthcare administration, and multi-location consumer services.</p>
+        </div>
+        <details class="source-note"><summary>Source &amp; scope</summary><p>Source: brief, Company Overview and Target Customer. Buyer roles include operations executives, chiefs of staff, controllers, and IT directors.</p></details>
+      </div>
+    </section>
+
+    <section class="slide" id="slide-4" data-slide aria-labelledby="title-4">
+      <div class="slide__inner">
+        <p class="eyebrow">The solution</p><h2 id="title-4">An orchestration layer—not another system to replace the stack.</h2>
+        <div class="orchestration" aria-label="FlowPilot coordinates work between business systems and accountable outcomes">
+          <div class="system-list"><span>CRM</span><span>Finance</span><span>HR</span><span>Support</span></div>
+          <div class="flow-arrow" aria-hidden="true">→</div>
+          <div class="flow-core"><strong>FlowPilot</strong><span>Workflows · owners · approvals · exceptions · evidence</span></div>
+          <div class="flow-arrow" aria-hidden="true">→</div>
+          <div class="outcome">Accountable work with a visible audit trail.</div>
+        </div>
+        <p class="lede rule-top" style="margin-top:2.5rem;"><strong>28 days</strong> median contract-to-first-live-workflow for H1 2026 launches.</p>
+        <details class="source-note"><summary>Source &amp; definition</summary><p>Source: brief, Solution. The 28-day median is a historical cohort result for customers launched in H1 2026, not a deployment guarantee.</p></details>
+      </div>
+    </section>
+
+    <section class="slide" id="slide-5" data-slide aria-labelledby="title-5">
+      <div class="slide__inner proof-layout">
+        <div><p class="eyebrow">Product in practice</p><h2 id="title-5">One platform. Three measurable operating outcomes.</h2>
+          <div class="proof-tabs" role="tablist" aria-label="Fictional customer outcomes">
+            <button class="proof-tab" id="tab-brightpath" type="button" role="tab" aria-selected="true" aria-controls="panel-brightpath">Location approvals</button>
+            <button class="proof-tab" id="tab-cedar" type="button" role="tab" aria-selected="false" aria-controls="panel-cedar" tabindex="-1">Customer onboarding</button>
+            <button class="proof-tab" id="tab-northline" type="button" role="tab" aria-selected="false" aria-controls="panel-northline" tabindex="-1">Access reviews</button>
+          </div>
+        </div>
+        <div>
+          <div class="proof-panel" id="panel-brightpath" role="tabpanel" aria-labelledby="tab-brightpath"><div class="proof-result"><strong>12 → 7 days</strong><p>BrightPath Services shortened new-location approval time across 34 locations.</p></div></div>
+          <div class="proof-panel" id="panel-cedar" role="tabpanel" aria-labelledby="tab-cedar" hidden><div class="proof-result"><strong>18 → 13 days</strong><p>Cedar Peak Software reduced median customer-onboarding time.</p></div></div>
+          <div class="proof-panel" id="panel-northline" role="tabpanel" aria-labelledby="tab-northline" hidden><div class="proof-result"><strong>81% → 96%</strong><p>Northline Health Administration increased quarterly access reviews completed by the deadline.</p></div></div>
+          <p class="caption">Select a workflow to explore the fictional customer example. Individual outcomes are not guarantees.</p>
+          <details class="source-note"><summary>Source &amp; product detail</summary><p>Source: brief, Product. The platform includes a visual builder, conditional approvals, templates, exception queues, role-based access, audit logs, 42 packaged integrations, and an API.</p></details>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide dark" id="slide-6" data-slide aria-labelledby="title-6">
+      <div class="slide__inner traction-stage">
+        <div><p class="eyebrow">Traction</p><span class="traction-number">$3.024M</span><span class="traction-label" id="title-6">annual recurring revenue at June 30, 2026</span><p class="small" style="margin-top:.65rem;">Equivalent to $252,000 monthly recurring revenue.</p></div>
+        <div class="traction-side"><article><strong>126</strong><span>paying customers</span></article><article><strong>+80%</strong><span>ARR growth from $1.680M at June 30, 2025</span></article><article><strong>$24K</strong><span>average annual contract value</span></article></div>
+        <details class="source-note"><summary>Source &amp; calculation</summary><p>Source: brief, Traction and Business Model. $24,000 average annual contract value × 126 customers = $3.024M ARR; $3.024M ÷ 12 = $252,000 MRR. Services are excluded from ARR.</p></details>
+      </div>
+    </section>
+
+    <section class="slide" id="slide-7" data-slide aria-labelledby="title-7">
+      <div class="slide__inner quality-layout">
+        <div><p class="eyebrow">Growth quality</p><h2 id="title-7">Growth accelerated while retention stayed above the base.</h2>
+          <div class="growth-bars" aria-label="First-half recognized revenue comparison">
+            <div class="growth-row"><span>H1 2025</span><div class="growth-track"><div class="growth-fill" style="width:54.35%"></div></div><strong>$0.75M</strong></div>
+            <div class="growth-row"><span>H1 2026</span><div class="growth-track"><div class="growth-fill" style="width:100%"></div></div><strong>$1.38M</strong></div>
+          </div><p class="caption" style="margin-top:.8rem;">Recognized revenue increased 84%.</p>
+        </div>
+        <div class="quality-metrics">
+          <article><strong>116%</strong><span>net revenue retention</span><p class="small">Includes expansion and contraction.</p></article>
+          <article><strong>90%</strong><span>gross revenue retention</span><p class="small">Excludes expansion.</p></article>
+          <article><strong>92%</strong><span>logo retention</span><p class="small">Trailing 12 months.</p></article>
+          <article><strong>22%</strong><span>qualified-trial conversion</span><p class="small">Up 5 percentage points from 17%.</p></article>
+        </div>
+        <details class="source-note"><summary>Source &amp; definitions</summary><p>Source: brief, Traction. H1 periods compare 2025 and 2026. Retention measures are trailing 12 months. Customer bridge: 82 opening + 52 added − 8 churned = 126 closing.</p></details>
+      </div>
+    </section>
+
+    <section class="slide" id="slide-8" data-slide aria-labelledby="title-8">
+      <div class="slide__inner market-layout">
+        <div><p class="eyebrow">Market opportunity</p><h2 id="title-8">A focused path into a $5.2B category.</h2><p class="lede">FlowPilot narrows the market by company size, industry, and integration readiness.</p></div>
+        <div class="market-stack" aria-label="Market sizing estimates">
+          <div class="market-band"><span>Total market<br><small>2026 North America</small></span><strong>$5.2B</strong></div>
+          <div class="market-band"><span>Serviceable<br><small>25% of total</small></span><strong>$1.3B</strong></div>
+          <div class="market-band"><span>Obtainable<br><small>10% of serviceable</small></span><strong>$130M</strong></div>
+          <p class="caption">Management estimates; unaudited and not forecasts.</p>
+        </div>
+        <details class="source-note"><summary>Source, scope &amp; assumptions</summary><p>Source: brief, Market Opportunity. Total excludes general project management and large-enterprise robotic automation. $130M equals 2.5% of the estimated total market.</p></details>
+      </div>
+    </section>
+
+    <section class="slide" id="slide-9" data-slide aria-labelledby="title-9">
+      <div class="slide__inner">
+        <p class="eyebrow">Business model</p><h2 id="title-9">Annual subscriptions expand with workflow complexity.</h2>
+        <div class="pricing" aria-label="Annual subscription starting prices">
+          <article class="price-tier"><span>Growth</span><strong>$18K</strong><small>starting annual price</small></article>
+          <article class="price-tier"><span>Scale</span><strong>$36K</strong><small>starting annual price</small></article>
+          <article class="price-tier"><span>Enterprise</span><strong>$72K</strong><small>starting annual price</small></article>
+        </div>
+        <div class="acv-equation"><span>Current average contract</span><strong>$24K</strong><span>× 126 customers =</span><strong>$3.024M ARR</strong></div>
+        <p class="caption">Typically billed annually in advance. Complex migration and custom implementation cost extra and are excluded from ARR.</p>
+        <details class="source-note"><summary>Source &amp; pricing notes</summary><p>Source: brief, Business Model. Pricing varies with workflow volume, advanced controls, and integration needs.</p></details>
+      </div>
+    </section>
+
+    <section class="slide" id="slide-10" data-slide aria-labelledby="title-10">
+      <div class="slide__inner">
+        <p class="eyebrow">Competitive position</p><h2 id="title-10">FlowPilot occupies the middle: governed, connected, fast to deploy.</h2>
+        <div class="comparison-wrap" tabindex="0" aria-label="Scrollable fictional vendor comparison">
+          <table class="comparison"><thead><tr><th scope="col">Vendor</th><th scope="col">Starting annual price</th><th scope="col">Typical deployment</th><th scope="col">Integrations</th><th scope="col">Primary tradeoff</th></tr></thead><tbody>
+            <tr><th scope="row">FlowPilot</th><td data-label="Starting price">$18,000</td><td data-label="Deployment">28 days</td><td data-label="Integrations">42</td><td data-label="Tradeoff">Balanced control and speed</td></tr>
+            <tr><th scope="row">Orchestrix</th><td data-label="Starting price">$30,000</td><td data-label="Deployment">60 days</td><td data-label="Integrations">70</td><td data-label="Tradeoff">Broader catalog, higher cost</td></tr>
+            <tr><th scope="row">TaskLane</th><td data-label="Starting price">$12,000</td><td data-label="Deployment">45 days</td><td data-label="Integrations">25</td><td data-label="Tradeoff">Lower price, lighter governance</td></tr>
+          </tbody></table>
+        </div>
+        <div class="position-line"><p><strong>Faster</strong><br><span class="small">than both stated alternatives.</span></p><p><strong>More connected</strong><br><span class="small">than the lower-priced option.</span></p><p><strong>Lower entry price</strong><br><span class="small">than the broader enterprise option.</span></p></div>
+        <details class="source-note"><summary>Source &amp; limitations</summary><p>Source: brief, Competitive Landscape. Directional fictional review using vendor materials and 24 fictional buyer evaluations. Competitor claims were not independently verified; actual prices vary.</p></details>
+      </div>
+    </section>
+
+    <section class="slide" id="slide-11" data-slide aria-labelledby="title-11">
+      <div class="slide__inner">
+        <p class="eyebrow">Go-to-market</p><h2 id="title-11">Prove one workflow. Expand from evidence.</h2><p class="lede">A focused direct-sales motion turns a real operating problem into a defined, guided trial.</p>
+        <div class="gtm" aria-label="Go-to-market sequence">
+          <article class="gtm-step"><span>01 · Reach</span><h3>Focused demand</h3><p class="small">Direct sales, educational content, and referrals.</p></article>
+          <article class="gtm-step"><span>02 · Frame</span><h3>One workflow</h3><p class="small">Define a real process and success criteria.</p></article>
+          <article class="gtm-step"><span>03 · Prove</span><h3>21-day trial</h3><p class="small">Guided evaluation around measurable work.</p></article>
+          <article class="gtm-step"><span>04 · Expand</span><h3>Partner reach</h3><p class="small">Planned advisers, integrators, and fractional operators.</p></article>
+        </div>
+        <div class="target-callout"><strong>Target:</strong> 26% qualified-trial conversion by June 2027, from 22%, while keeping median sales cycle below 50 days.</div>
+        <details class="source-note"><summary>Source &amp; forward-looking status</summary><p>Source: brief, Go-to-Market Strategy and Traction. The 21-day trial is current. Partnerships and the 26% conversion / sub-50-day sales-cycle figures are plans or targets, not completed results.</p></details>
+      </div>
+    </section>
+
+    <section class="slide" id="slide-12" data-slide aria-labelledby="title-12">
+      <div class="slide__inner team-layout">
+        <div><p class="eyebrow">Team</p><div class="team-count" aria-label="18 people">18</div><h2 id="title-12">operators building for operators.</h2></div>
+        <div><div class="leaders">
+          <article><h3>Maya Chen · CEO</h3><p class="small">Previously led mid-market operations software.</p></article>
+          <article><h3>Daniel Ortiz · CTO</h3><p class="small">Built cloud-accounting integration infrastructure.</p></article>
+          <article><h3>Lena Brooks · VP Revenue</h3><p class="small">Led sales to operations and finance buyers.</p></article>
+        </div><div class="team-mix"><span>8 product &amp; engineering</span><span>4 sales &amp; marketing</span><span>4 implementation &amp; success</span><span>2 finance &amp; administration</span></div></div>
+        <details class="source-note"><summary>Source &amp; status</summary><p>Source: brief, Team. All people and credentials are fictional. Hiring priorities: engineering, security, customer success, and partnerships.</p></details>
+      </div>
+    </section>
+
+    <section class="slide dark" id="slide-13" data-slide aria-labelledby="title-13">
+      <div class="slide__inner ask-layout">
+        <div><p class="eyebrow">The raise</p><span class="ask-number">$6.0M</span><h2 id="title-13">seed round for an estimated 24 months.</h2><p class="small">Runway depends on hiring pace, revenue, and expenses.</p></div>
+        <div class="use-bars" aria-label="Proposed use of funds">
+          <div class="use-row"><span>45%</span><div class="use-track"><div class="use-fill" style="width:100%"></div></div><strong>$2.7M · Product &amp; engineering</strong></div>
+          <div class="use-row"><span>30%</span><div class="use-track"><div class="use-fill" style="width:66.667%"></div></div><strong>$1.8M · Go-to-market</strong></div>
+          <div class="use-row"><span>15%</span><div class="use-track"><div class="use-fill" style="width:33.333%"></div></div><strong>$0.9M · Implementation &amp; success</strong></div>
+          <div class="use-row"><span>10%</span><div class="use-track"><div class="use-fill" style="width:22.222%"></div></div><strong>$0.6M · Compliance &amp; operations</strong></div>
+          <p class="caption">Allocations total 100% and $6.0M.</p>
+        </div>
+        <details class="source-note"><summary>Source &amp; assumptions</summary><p>Source: brief, Fundraising Ask. This is a fictional fundraising request. The runway is a planning estimate, not a guarantee.</p></details>
+      </div>
+    </section>
+
+    <section class="slide dark" id="slide-14" data-slide aria-labelledby="title-14">
+      <div class="slide__inner close-grid">
+        <div><p class="eyebrow">The investment thesis</p><h2 id="title-14">A credible wedge, early evidence—and execution still to prove.</h2><p class="lede">FlowPilot pairs fast deployment with growing recurring revenue in a focused mid-market category. The case now depends on scaling delivery without weakening retention, security, or qualification.</p><span class="test-badge">Fictional test material</span></div>
+        <div class="risk-list" aria-label="Principal risks"><p><strong>Market:</strong> internal estimates may overstate demand.</p><p><strong>Competition:</strong> larger vendors can bundle; cheaper tools may be sufficient.</p><p><strong>Platform:</strong> integrations depend on third-party APIs.</p><p><strong>Execution:</strong> implementation, security, hiring, retention, and conversion must scale together.</p></div>
+        <details class="source-note"><summary>Source &amp; caution</summary><p>Source: brief, Risks. Growth and retention are historical fictional results; fundraising, conversion targets, market estimates, planned partnerships, hiring, and runway are forward-looking assumptions rather than guarantees. This is not a real investment opportunity.</p></details>
+      </div>
+    </section>
+  </main>
+
+  <div class="progress-track" aria-hidden="true"><div class="progress-bar" id="progress-bar"></div></div>
+  <span class="fictional-flag">Fictional test deck</span>
+  <nav class="deck-controls" aria-label="Presentation controls">
+    <button id="previous" type="button" aria-label="Previous slide">←</button>
+    <span class="counter" aria-live="polite"><span id="current-slide">1</span> / <span id="total-slides">14</span></span>
+    <button id="next" type="button" aria-label="Next slide">→</button>
+    <button id="fullscreen" type="button" aria-label="Enter fullscreen">⛶</button>
+  </nav>
+
+  <script>
+    (() => {
+      const slides = [...document.querySelectorAll('.slide')];
+      const previous = document.querySelector('#previous');
+      const next = document.querySelector('#next');
+      const fullscreen = document.querySelector('#fullscreen');
+      const current = document.querySelector('#current-slide');
+      const total = document.querySelector('#total-slides');
+      const progress = document.querySelector('#progress-bar');
+      let index = 0;
+
+      const hashIndex = () => {
+        const match = window.location.hash.match(/^#slide-(\d+)$/);
+        return match ? Math.min(Math.max(Number(match[1]) - 1, 0), slides.length - 1) : 0;
+      };
+
+      function showSlide(nextIndex, updateHash = true) {
+        index = Math.min(Math.max(nextIndex, 0), slides.length - 1);
+        slides.forEach((slide, slideIndex) => {
+          const active = slideIndex === index;
+          slide.classList.toggle('is-active', active);
+          slide.setAttribute('aria-hidden', String(!active));
+          if ('inert' in slide) slide.inert = !active;
+        });
+        current.textContent = String(index + 1);
+        total.textContent = String(slides.length);
+        progress.style.width = `${((index + 1) / slides.length) * 100}%`;
+        previous.disabled = index === 0;
+        next.disabled = index === slides.length - 1;
+        if (updateHash) history.replaceState(null, '', `#slide-${index + 1}`);
+        document.title = `FlowPilot — ${index + 1}/${slides.length}`;
+      }
+
+      previous.addEventListener('click', () => showSlide(index - 1));
+      next.addEventListener('click', () => showSlide(index + 1));
+      document.addEventListener('keydown', (event) => {
+        if (event.target.closest('button, a, summary, input, textarea, select, [role="tab"]')) return;
+        if (event.key === 'ArrowRight' || event.key === ' ') { event.preventDefault(); showSlide(index + 1); }
+        else if (event.key === 'ArrowLeft') { event.preventDefault(); showSlide(index - 1); }
+        else if (event.key === 'Home') { event.preventDefault(); showSlide(0); }
+        else if (event.key === 'End') { event.preventDefault(); showSlide(slides.length - 1); }
+      });
+      window.addEventListener('hashchange', () => showSlide(hashIndex(), false));
+
+      if (!document.fullscreenEnabled) fullscreen.hidden = true;
+      else {
+        fullscreen.addEventListener('click', async () => {
+          if (document.fullscreenElement) await document.exitFullscreen();
+          else await document.documentElement.requestFullscreen();
+        });
+        document.addEventListener('fullscreenchange', () => fullscreen.setAttribute('aria-label', document.fullscreenElement ? 'Exit fullscreen' : 'Enter fullscreen'));
+      }
+
+      const tabs = [...document.querySelectorAll('[role="tab"]')];
+      function selectTab(tab, focus = false) {
+        tabs.forEach((item) => {
+          const selected = item === tab;
+          item.setAttribute('aria-selected', String(selected));
+          item.tabIndex = selected ? 0 : -1;
+          document.querySelector(`#${item.getAttribute('aria-controls')}`).hidden = !selected;
+        });
+        if (focus) tab.focus();
+      }
+      tabs.forEach((tab, tabIndex) => {
+        tab.addEventListener('click', () => selectTab(tab));
+        tab.addEventListener('keydown', (event) => {
+          if (!['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown', 'Home', 'End'].includes(event.key)) return;
+          event.preventDefault();
+          let target = tabIndex;
+          if (event.key === 'ArrowRight' || event.key === 'ArrowDown') target = (tabIndex + 1) % tabs.length;
+          if (event.key === 'ArrowLeft' || event.key === 'ArrowUp') target = (tabIndex - 1 + tabs.length) % tabs.length;
+          if (event.key === 'Home') target = 0;
+          if (event.key === 'End') target = tabs.length - 1;
+          selectTab(tabs[target], true);
+        });
+      });
+
+      showSlide(hashIndex(), false);
+    })();
+  </script>
+</body>
+</html>

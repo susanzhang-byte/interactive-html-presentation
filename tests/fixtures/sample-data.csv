@@ -1,0 +1,15 @@
+# FICTIONAL TEST DATA — LumaFlow; created only for presentation-workflow testing.
+# Units: customers=end-of-period count; revenue=USD thousands for the stated half-year; conversion_rate and retention_rate=percent.
+period,segment,customers,revenue,conversion_rate,retention_rate
+H1 2025,Starter,168,1260,9.5,84.0
+H1 2025,Mid-Market,142,2130,11.0,88.0
+H1 2025,Enterprise,51,1280,13.5,91.0
+H1 2025,Strategic,14,330,16.0,94.0
+H2 2025,Starter,181,1410,10.2,85.0
+H2 2025,Mid-Market,165,2580,12.4,89.5
+H2 2025,Enterprise,60,1570,14.8,92.0
+H2 2025,Strategic,16,390,17.2,94.5
+H1 2026,Starter,194,1530,11.0,86.0
+H1 2026,Mid-Market,194,3150,14.0,91.0
+H1 2026,Enterprise,72,1840,16.5,93.0
+H1 2026,Strategic,20,480,19.0,95.0

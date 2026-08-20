@@ -1,0 +1,571 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>Editorial Presentation Starter</title>
+  <style>
+    :root {
+      --background: #f4f1ea;
+      --text: #171714;
+      --muted-text: #68675f;
+      --accent: #b94b32;
+      --surface: #fffdf8;
+      --rule: #cbc7bc;
+      --spacing: clamp(1.25rem, 3vw, 3rem);
+      --border-radius: 0.4rem;
+      --content-width: 78rem;
+    }
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+    }
+
+    html {
+      background: var(--background);
+      color: var(--text);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.5;
+      overflow-x: hidden;
+    }
+
+    body {
+      min-width: 0;
+      margin: 0;
+      overflow-x: hidden;
+    }
+
+    button {
+      color: inherit;
+      font: inherit;
+    }
+
+    button:focus-visible,
+    [tabindex]:focus-visible {
+      outline: 0.2rem solid var(--accent);
+      outline-offset: 0.2rem;
+    }
+
+    .presentation {
+      min-height: 100svh;
+      background: var(--background);
+    }
+
+    .slide {
+      min-height: 100svh;
+      padding: max(var(--spacing), env(safe-area-inset-top))
+        max(var(--spacing), env(safe-area-inset-right))
+        max(calc(var(--spacing) * 3.2), calc(6rem + env(safe-area-inset-bottom)))
+        max(var(--spacing), env(safe-area-inset-left));
+    }
+
+    .slide[hidden] {
+      display: none;
+    }
+
+    .slide.is-active {
+      display: grid;
+      animation: slide-enter 260ms ease-out both;
+    }
+
+    .slide__inner {
+      width: min(100%, var(--content-width));
+      margin: auto;
+    }
+
+    .eyebrow {
+      margin: 0 0 1.25rem;
+      color: var(--accent);
+      font-size: 0.82rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    h1,
+    h2,
+    p {
+      margin-top: 0;
+    }
+
+    h1,
+    h2 {
+      max-width: 16ch;
+      margin-bottom: 1.5rem;
+      font-weight: 680;
+      letter-spacing: -0.045em;
+      line-height: 0.98;
+      text-wrap: balance;
+    }
+
+    h1 {
+      font-size: clamp(3.2rem, 9vw, 8.5rem);
+    }
+
+    h2 {
+      font-size: clamp(2.35rem, 5.5vw, 5.25rem);
+    }
+
+    .lead {
+      max-width: 38rem;
+      margin-bottom: 0;
+      color: var(--muted-text);
+      font-size: clamp(1.08rem, 1.7vw, 1.45rem);
+      line-height: 1.55;
+    }
+
+    .hero {
+      align-content: center;
+    }
+
+    .hero .slide__inner {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(11rem, 0.32fr);
+      gap: calc(var(--spacing) * 1.5);
+      align-items: end;
+    }
+
+    .hero__note {
+      max-width: 18rem;
+      margin: 0 0 0.75rem;
+      padding-top: 1rem;
+      border-top: 0.18rem solid var(--accent);
+      color: var(--muted-text);
+      font-size: 0.95rem;
+    }
+
+    .data-slide {
+      align-content: center;
+      background: var(--surface);
+    }
+
+    .data-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 0.78fr) minmax(18rem, 1.22fr);
+      gap: clamp(2.5rem, 7vw, 7rem);
+      align-items: end;
+    }
+
+    .metric {
+      margin-top: 2.5rem;
+    }
+
+    .metric__value {
+      display: block;
+      color: var(--accent);
+      font-size: clamp(4.5rem, 10vw, 9rem);
+      font-weight: 720;
+      letter-spacing: -0.07em;
+      line-height: 0.82;
+    }
+
+    .metric__label {
+      display: block;
+      max-width: 24rem;
+      margin-top: 1.25rem;
+      color: var(--muted-text);
+      font-size: 1rem;
+    }
+
+    .comparison {
+      margin: 0;
+      border-top: 0.12rem solid var(--text);
+    }
+
+    .comparison__row {
+      display: grid;
+      grid-template-columns: minmax(7rem, 0.7fr) minmax(0, 1.3fr) auto;
+      gap: 1rem;
+      align-items: center;
+      padding: 1.2rem 0;
+      border-bottom: 0.0625rem solid var(--rule);
+    }
+
+    .comparison dt,
+    .comparison dd {
+      margin: 0;
+    }
+
+    .comparison__track {
+      height: 0.55rem;
+      overflow: hidden;
+      border-radius: var(--border-radius);
+      background: #dfdcd3;
+    }
+
+    .comparison__bar {
+      display: block;
+      width: var(--value);
+      height: 100%;
+      background: var(--accent);
+    }
+
+    .comparison__value {
+      min-width: 3ch;
+      font-variant-numeric: tabular-nums;
+      font-weight: 700;
+      text-align: right;
+    }
+
+    .source-note {
+      margin: 1rem 0 0;
+      color: var(--muted-text);
+      font-size: 0.85rem;
+    }
+
+    .closing {
+      align-content: end;
+      background: var(--text);
+      color: var(--background);
+    }
+
+    .closing h2 {
+      max-width: 13ch;
+    }
+
+    .closing .lead {
+      color: #cbc8bf;
+    }
+
+    .closing .eyebrow {
+      color: #e98b72;
+    }
+
+    .presentation-controls {
+      position: fixed;
+      z-index: 10;
+      right: max(1rem, env(safe-area-inset-right));
+      bottom: max(1rem, env(safe-area-inset-bottom));
+      left: max(1rem, env(safe-area-inset-left));
+      display: grid;
+      grid-template-columns: auto minmax(8rem, 1fr) auto;
+      gap: 1rem;
+      align-items: center;
+      width: min(calc(100% - 2rem), var(--content-width));
+      margin-inline: auto;
+      padding: 0.65rem;
+      border: 0.0625rem solid rgb(23 23 20 / 18%);
+      border-radius: var(--border-radius);
+      background: rgb(255 253 248 / 94%);
+      box-shadow: 0 0.5rem 1.8rem rgb(23 23 20 / 10%);
+      color: var(--text);
+    }
+
+    .control-group {
+      display: flex;
+      gap: 0.45rem;
+    }
+
+    .control-button {
+      min-width: 2.75rem;
+      min-height: 2.75rem;
+      padding: 0.55rem 0.8rem;
+      border: 0.0625rem solid var(--rule);
+      border-radius: var(--border-radius);
+      background: transparent;
+      cursor: pointer;
+    }
+
+    .control-button:hover:not(:disabled) {
+      border-color: var(--text);
+      background: #eeebe3;
+    }
+
+    .control-button:disabled {
+      cursor: not-allowed;
+      opacity: 0.42;
+    }
+
+    .progress-group {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 0.8rem;
+      align-items: center;
+    }
+
+    .slide-progress {
+      width: 100%;
+      height: 0.35rem;
+      overflow: hidden;
+      border: 0;
+      border-radius: var(--border-radius);
+      background: #dfdcd3;
+      color: var(--accent);
+    }
+
+    .slide-progress::-webkit-progress-bar {
+      background: #dfdcd3;
+    }
+
+    .slide-progress::-webkit-progress-value {
+      background: var(--accent);
+    }
+
+    .slide-progress::-moz-progress-bar {
+      background: var(--accent);
+    }
+
+    .slide-count {
+      min-width: 4.8rem;
+      color: var(--muted-text);
+      font-size: 0.9rem;
+      font-variant-numeric: tabular-nums;
+      text-align: right;
+    }
+
+    @keyframes slide-enter {
+      from {
+        opacity: 0;
+        transform: translateY(0.6rem);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @media (max-width: 48rem) {
+      .slide {
+        min-height: 100svh;
+        padding-bottom: 8rem;
+      }
+
+      .slide__inner {
+        width: min(100%, 22rem);
+        margin-inline: 0;
+      }
+
+      .hero,
+      .data-slide,
+      .closing {
+        align-content: start;
+      }
+
+      .hero .slide__inner,
+      .data-layout {
+        grid-template-columns: 1fr;
+      }
+
+      .hero__note {
+        margin-top: 2rem;
+      }
+
+      h1 {
+        font-size: clamp(2.7rem, 10vw, 3rem);
+      }
+
+      h2 {
+        font-size: clamp(2.25rem, 9vw, 2.8rem);
+      }
+
+      .comparison__row {
+        grid-template-columns: minmax(6rem, 1fr) auto;
+      }
+
+      .comparison__track {
+        grid-column: 1 / -1;
+        grid-row: 2;
+      }
+
+      .presentation-controls {
+        grid-template-columns: 1fr auto;
+        gap: 0.55rem;
+        width: min(calc(100% - 2rem), 22rem);
+        margin-inline: 0;
+      }
+
+      .progress-group {
+        grid-column: 1 / -1;
+        grid-row: 1;
+      }
+
+      .control-group:last-child {
+        justify-self: end;
+      }
+    }
+
+    @media (max-width: 32rem) {
+      .control-button__label {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        scroll-behavior: auto !important;
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="presentation" aria-label="Example presentation">
+    <section class="slide hero is-active" id="slide-1" data-slide aria-labelledby="slide-1-title" tabindex="-1">
+      <div class="slide__inner">
+        <div>
+          <p class="eyebrow">Editorial presentation starter</p>
+          <h1 id="slide-1-title">Make the central idea impossible to miss.</h1>
+          <p class="lead">A dependency-free foundation for clear narratives, generous spacing, and purposeful interaction.</p>
+        </div>
+        <p class="hero__note">Use the grid as a foundation, then choose each slide’s composition from its content.</p>
+      </div>
+    </section>
+
+    <section class="slide data-slide" id="slide-2" data-slide aria-labelledby="slide-2-title" tabindex="-1" hidden>
+      <div class="slide__inner data-layout">
+        <div>
+          <p class="eyebrow">Example data composition</p>
+          <h2 id="slide-2-title">One insight leads; the evidence follows.</h2>
+          <div class="metric" aria-label="Illustrative primary value: 68 percent">
+            <span class="metric__value">68%</span>
+            <span class="metric__label">Illustrative value only. Replace this copy, value, context, and source with verified material.</span>
+          </div>
+        </div>
+
+        <div>
+          <dl class="comparison" aria-label="Illustrative comparison values">
+            <div class="comparison__row">
+              <dt>Baseline</dt>
+              <dd class="comparison__track" aria-hidden="true"><span class="comparison__bar" style="--value: 42%"></span></dd>
+              <dd class="comparison__value">42</dd>
+            </div>
+            <div class="comparison__row">
+              <dt>Current</dt>
+              <dd class="comparison__track" aria-hidden="true"><span class="comparison__bar" style="--value: 68%"></span></dd>
+              <dd class="comparison__value">68</dd>
+            </div>
+            <div class="comparison__row">
+              <dt>Target</dt>
+              <dd class="comparison__track" aria-hidden="true"><span class="comparison__bar" style="--value: 82%"></span></dd>
+              <dd class="comparison__value">82</dd>
+            </div>
+          </dl>
+          <p class="source-note">Illustrative placeholder data—not a factual claim. Replace with a traceable source and applicable units.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide closing" id="slide-3" data-slide aria-labelledby="slide-3-title" tabindex="-1" hidden>
+      <div class="slide__inner">
+        <p class="eyebrow">Closing thought</p>
+        <h2 id="slide-3-title">End with the idea the audience should carry forward.</h2>
+        <p class="lead">Replace this example with a supported conclusion, decision, or next step.</p>
+      </div>
+    </section>
+  </main>
+
+  <nav class="presentation-controls" aria-label="Presentation controls">
+    <div class="control-group">
+      <button class="control-button" id="previous-slide" type="button" aria-label="Previous slide">
+        <span aria-hidden="true">←</span>
+        <span class="control-button__label"> Previous</span>
+      </button>
+      <button class="control-button" id="next-slide" type="button" aria-label="Next slide">
+        <span class="control-button__label">Next </span>
+        <span aria-hidden="true">→</span>
+      </button>
+    </div>
+
+    <div class="progress-group">
+      <progress class="slide-progress" id="slide-progress" value="1" max="3" aria-label="Presentation progress">1 of 3</progress>
+      <output class="slide-count" id="slide-count" aria-live="polite">1 / 3</output>
+    </div>
+
+    <div class="control-group">
+      <button class="control-button" id="fullscreen" type="button" aria-label="Enter fullscreen">
+        <span aria-hidden="true">⛶</span>
+        <span class="control-button__label"> Fullscreen</span>
+      </button>
+    </div>
+  </nav>
+
+  <script>
+    (() => {
+      const slides = Array.from(document.querySelectorAll("[data-slide]"));
+      const previousButton = document.querySelector("#previous-slide");
+      const nextButton = document.querySelector("#next-slide");
+      const fullscreenButton = document.querySelector("#fullscreen");
+      const progress = document.querySelector("#slide-progress");
+      const slideCount = document.querySelector("#slide-count");
+      let activeIndex = 0;
+
+      function showSlide(index, { moveFocus = false } = {}) {
+        activeIndex = Math.max(0, Math.min(index, slides.length - 1));
+
+        slides.forEach((slide, slideIndex) => {
+          const isActive = slideIndex === activeIndex;
+          slide.hidden = !isActive;
+          slide.classList.toggle("is-active", isActive);
+          slide.setAttribute("aria-hidden", String(!isActive));
+        });
+
+        const current = activeIndex + 1;
+        progress.value = current;
+        progress.max = slides.length;
+        progress.textContent = `${current} of ${slides.length}`;
+        slideCount.value = `${current} / ${slides.length}`;
+        previousButton.disabled = activeIndex === 0;
+        nextButton.disabled = activeIndex === slides.length - 1;
+
+        window.scrollTo({ top: 0, behavior: "auto" });
+        if (moveFocus) slides[activeIndex].focus({ preventScroll: true });
+      }
+
+      function isTypingTarget(target) {
+        return target instanceof HTMLElement &&
+          (target.isContentEditable || /^(INPUT|TEXTAREA|SELECT|BUTTON)$/.test(target.tagName));
+      }
+
+      previousButton.addEventListener("click", () => showSlide(activeIndex - 1));
+      nextButton.addEventListener("click", () => showSlide(activeIndex + 1));
+
+      document.addEventListener("keydown", (event) => {
+        if (isTypingTarget(event.target)) return;
+
+        if (event.key === "ArrowRight" || event.key === " ") {
+          event.preventDefault();
+          showSlide(activeIndex + 1, { moveFocus: true });
+        } else if (event.key === "ArrowLeft") {
+          event.preventDefault();
+          showSlide(activeIndex - 1, { moveFocus: true });
+        }
+      });
+
+      if (!document.fullscreenEnabled) {
+        fullscreenButton.hidden = true;
+      } else {
+        fullscreenButton.addEventListener("click", async () => {
+          if (document.fullscreenElement) {
+            await document.exitFullscreen();
+          } else {
+            await document.documentElement.requestFullscreen();
+          }
+        });
+
+        document.addEventListener("fullscreenchange", () => {
+          const isFullscreen = Boolean(document.fullscreenElement);
+          fullscreenButton.setAttribute("aria-label", isFullscreen ? "Exit fullscreen" : "Enter fullscreen");
+          fullscreenButton.querySelector(".control-button__label").textContent = isFullscreen ? " Exit fullscreen" : " Fullscreen";
+        });
+      }
+
+      showSlide(0);
+    })();
+  </script>
+</body>
+</html>
